@@ -60,13 +60,13 @@ class UsersController < ApplicationController
      @house = House.find(params[:house_id])
      @user.houses << @house unless params[:house_code] != @house.code or @user.houses.include? @house
     end
-    redirect_to "/users/#{@user.id}"
+    redirect_to @user
   end
 
   def delete_house
     @house = House.find(params[:house_id])
     @user.houses.delete(@house)
-    redirect_to "/users/#{@user.id}"
+    redirect_to @user
   end
 
   def authenticate_user

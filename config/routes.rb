@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :users
+  resources :users, except: [:index]
   root 'welcome#index'
 
   post '/houses/:id/users', to: 'houses#add_user'

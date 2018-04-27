@@ -68,13 +68,13 @@ class HousesController < ApplicationController
       @user = User.find(params[:user_id])
       @house.users << @user unless @house.users.include? @user
     end
-    redirect_to "/houses/#{@house.id}"
+    redirect_to @house
   end
 
   def delete_user
     @user = User.find(params[:user_id])
     @house.users.delete(@user)
-    redirect_to "/houses/#{@house.id}"
+    redirect_to @user
   end
 
   def authenticate_user

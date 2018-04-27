@@ -27,14 +27,14 @@ class ChoresController < ApplicationController
   # POST /chores.json
   def create
     @house.chores.create(chore_params)
-    redirect_to "/houses/#{@house.id}"
+    redirect_to @house
   end
 
   # PATCH/PUT /chores/1
   # PATCH/PUT /chores/1.json
   def update
     if @chore.update(chore_params)
-      redirect_to "/houses/#{@house.id}"
+      redirect_to @house
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class ChoresController < ApplicationController
   # DELETE /chores/1.json
   def destroy
     @chore.destroy
-    redirect_to "/houses/#{@house.id}"
+    redirect_to @house
   end
 
   def authenticate_user
@@ -53,7 +53,7 @@ class ChoresController < ApplicationController
 
   def complete
     @chore.update(completed: !@chore.completed)
-    redirect_to "/houses/#{@house.id}"
+    redirect_to @house
   end
 
   private

@@ -30,12 +30,21 @@
   <p>No chores yet...</p>
 <% else %>
   <ul>
+    <h3>To Do:</h3>
     <% @house.chores.each do |chore| %>
+      <% if !chore.completed %>
       <li><%= chore.description %> 
-      <%=link_to_if(chore.completed, "Mark as incomplete", complete_house_chore_path(@house, chore), method: :post) do
-        link_to("Mark as completed", complete_house_chore_path(@house, chore), method: :post) end %>
-      
+      <% link_to("Mark as Complete", complete_house_chore_path(@house, chore), method: :post) %>
       | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
+      <% end %>
+    <% end %>
+    <h3>Completed:</h3>
+    <% @house.chores.each do |chore| %>
+      <% if chore.completed %>
+      <li><%= chore.description %> 
+      <% link_to("Mark as Incomplete", complete_house_chore_path(@house, chore), method: :post) %>
+      | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
+      <% end %>
     <% end %>
   </ul>
 <% end %>

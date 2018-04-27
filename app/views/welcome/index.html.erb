@@ -1,5 +1,7 @@
 <% if logged_in? %>
-  <H1>Logged IN</h1>
+  <h1>Welcome to Roommate Helper</h1>
+  <br>
+  <%= link_to "Go to My Profile", current_user %>
   <% else %>
   <h1>Welcome to Roommate Helper</h1>
   <p>Log In or Sign Up to Begin!</p>
