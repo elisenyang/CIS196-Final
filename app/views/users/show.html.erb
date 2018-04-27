@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @user.username %></h1>
+
+<h2>Houses:</h2>
+<% if @user.houses.empty? %>
+  <p>Not in any houses yet...</p>
+<% else %>
+  <ul>
+    <% @user.houses.each do |house| %>
+      <li><%= link_to house.name, "/houses/#{house.id}" %> | <%= link_to 'Leave', "/users/#{@user.id}/houses/#{house.id}", method: :delete %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h3>Add a House:</h3>
+<%= form_with url: "/users/#{@user.id}/houses" do |form| %>
+  <%= form.collection_select :house_id, @houses, :id, :name, prompt: true %>
+  <%= form.text_field :Code, id: :house_code %>
+  <%= form.submit 'Add House' %>
+<% end %>
+
+<br>
+
+<%= link_to 'Edit', "/users/#{@user.id}/edit" %> |
+<%= link_to 'Destroy', "/users/#{@user.id}", method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', '/users' %>

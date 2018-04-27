@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @house.name %></h1>
+
+<h2>Roommates:</h2>
+<% if @house.users.empty? %>
+  <p>No roommates added yet...</p>
+<% else %>
+  <ul>
+    <% @house.users.each do |user| %>
+      <% if user == current_user %>
+        <li><%= link_to user.username, "/users/#{user.id}" %> (Me) | 
+        <%= link_to 'Leave House', "/houses/#{@house.id}/users/#{user.id}", method: :delete %></li>
+      <% else %>
+        <li><%= link_to user.username, "/users/#{user.id}" %> | 
+        <%= link_to 'Remove Roommate', "/houses/#{@house.id}/users/#{user.id}", method: :delete %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
+<h3>Add a user:</h3>
+<%= form_with url: "/houses/#{@house.id}/users" do |form| %>
+  <%= form.collection_select :user_id, @users, :id, :username, prompt: true %>
+  <%= form.submit 'Add User' %>
+<% end %>
+
+<h2>Chores:</h2>
+<% if @house.chores.empty? %>
+  <p>No chores yet...</p>
+<% else %>
+  <ul>
+    <% @house.chores.each do |chore| %>
+      <li><%= chore.description %> 
+      <%=link_to_if(chore.completed, "Mark as incomplete", complete_house_chore_path(@house, chore), method: :post) do
+        link_to("Mark as completed", complete_house_chore_path(@house, chore), method: :post) end %>
+      
+      | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h3>Add a chore:</h3>
+<%= form_with url: "/houses/#{@house.id}/chores" do |form| %>
+  <%= form.text_area 'chore[description]' %><br>
+  <%= form.submit 'Add Chore' %>
+<% end %>
+
+<br>
+
+<%= link_to 'Edit', "/houses/#{@house.id}/edit" %> |
+<%= link_to 'Destroy', "/houses/#{@house.id}", method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', '/houses' %>

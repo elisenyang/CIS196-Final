@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Houses</h1>
+
+<% if @houses.empty? %>
+  <p>No houses yet...</p>
+<% else %>
+  <ul>
+    <% @houses.each do |house| %>
+      <li><%= link_to house.name, "/houses/#{house.id}" %> | <%= pluralize house.users.size, 'user' %> Joined</li>
+    <% end %>
+  </ul>
+<% end %>
+
+<br>
+
+<%= link_to 'New House', new_house_path %>

@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<% if @users.empty? %>
+  <p>No Users yet...</p>
+<% else %>
+  <ul>
+    <% @users.each do |user| %>
+      <li><%= link_to user.username, "/users/#{user.id}" %> | lives in <%= pluralize user.houses.size, 'room' %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<br>
+
+<%= link_to 'New User', '/users/new' %>
