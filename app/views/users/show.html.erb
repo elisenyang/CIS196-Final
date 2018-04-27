@@ -28,7 +28,7 @@
       <%= form.collection_select :house_id, @houses, :id, :name, prompt: true %>
       <br>
       <%= form.label :secret_code %>
-      <%= form.text_field :Code, id: :user_password, class: 'form-control' %>
+      <%= form.text_field :code, id: :house_code, class: 'form-control' %>
       <br>
       <%= form.submit 'Add House' %>
     <% end %>

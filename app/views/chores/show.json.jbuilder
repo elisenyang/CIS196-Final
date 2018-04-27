@@ -1,1 +1,1 @@
-json.partial! "chores/chore", chore: @chore
+json.partial! 'chores/chore', chore: @chore

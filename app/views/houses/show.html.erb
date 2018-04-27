@@ -57,7 +57,7 @@
           <% if !chore.completed %>
           <li><%= chore.description %> 
           <%= link_to("Mark as Complete", complete_house_chore_path(@house, chore), method: :post) %>
-          | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
+          | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Delete', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
           <% end %>
           <% end %>
       </ul>
