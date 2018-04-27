@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy if @user == current_user
     reset_session
-    redirect_to users_path
+    redirect_to :root
   end
 
   def add_house

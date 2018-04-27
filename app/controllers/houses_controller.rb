@@ -27,6 +27,8 @@ class HousesController < ApplicationController
   # POST /houses.json
   def create
     @house = House.new(house_params)
+    @user = User.find(current_user.id)
+    @house.users << @user unless @house.users.include? @user
 
     respond_to do |format|
       if @house.save
@@ -58,7 +60,7 @@ class HousesController < ApplicationController
   def destroy
     @house.destroy
     respond_to do |format|
-      format.html { redirect_to houses_url, notice: 'House was successfully destroyed.' }
+      format.html { redirect_to current_user, notice: 'House was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

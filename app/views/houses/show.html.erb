@@ -1,62 +1,95 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @house.name %></h1>
+<div class="row">
+  <div class="col-lg-6 offset-lg-2">
+    <h1 class="display-3"><%= @house.name %></h1>
+  </div>
+</div>
 
-<h2>Roommates:</h2>
-<% if @house.users.empty? %>
-  <p>No roommates added yet...</p>
-<% else %>
-  <ul>
-    <% @house.users.each do |user| %>
-      <% if user == current_user %>
-        <li><%= link_to user.username, "/users/#{user.id}" %> (Me) | 
-        <%= link_to 'Leave House', "/houses/#{@house.id}/users/#{user.id}", method: :delete %></li>
-      <% else %>
-        <li><%= link_to user.username, "/users/#{user.id}" %> | 
-        <%= link_to 'Remove Roommate', "/houses/#{@house.id}/users/#{user.id}", method: :delete %></li>
-      <% end %>
+<div class="row">
+  <div class="col-lg-6 offset-lg-2">
+    <h2>Roommates:</h2>
+    <% if @house.users.empty? %>
+      <p>No roommates added yet...</p>
+    <% else %>
+      <ul>
+        <% @house.users.each do |user| %>
+          <% if user == current_user %>
+            <li><%= link_to user.username, "/users/#{user.id}" %> (Me) | 
+            <%= link_to 'Leave House', "/houses/#{@house.id}/users/#{user.id}", method: :delete %></li>
+          <% else %>
+            <li><%= link_to user.username, "/users/#{user.id}" %> | 
+            <%= link_to 'Remove Roommate', "/houses/#{@house.id}/users/#{user.id}", method: :delete %></li>
+          <% end %>
+        <% end %>
+      </ul>
     <% end %>
-  </ul>
-<% end %>
+  </div>
+</div>
 
-<h3>Add a user:</h3>
-<%= form_with url: "/houses/#{@house.id}/users" do |form| %>
-  <%= form.collection_select :user_id, @users, :id, :username, prompt: true %>
-  <%= form.submit 'Add User' %>
-<% end %>
+<div class="row">
+  <div class="col-lg-6 offset-lg-2">
+    <h3>Add a user:</h3>
+    <%= form_with url: "/houses/#{@house.id}/users" do |form| %>
+      <%= form.collection_select :user_id, @users, :id, :username, prompt: true %>
+      <%= form.submit 'Add User' %>
+    <% end %>
+  </div>
+</div>
 
-<h2>Chores:</h2>
+<div class="row">
+  <div class="col-lg-10 offset-lg-2">
+    <h2>Chores:</h2>
+  </div>
+</div>
 <% if @house.chores.empty? %>
-  <p>No chores yet...</p>
+  <div class="row">
+    <div class="col-lg-10 offset-lg-2">
+      <p>No chores yet...</p>
+    </div>
+  </div>
 <% else %>
-  <ul>
-    <h3>To Do:</h3>
-    <% @house.chores.each do |chore| %>
-      <% if !chore.completed %>
-      <li><%= chore.description %> 
-      <% link_to("Mark as Complete", complete_house_chore_path(@house, chore), method: :post) %>
-      | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
-      <% end %>
+  <div class="row">
+    <div class="col-lg-10 offset-lg-2">
+      <ul>
+        <h3>To Do:</h3>
+        <% @house.chores.each do |chore| %>
+          <% if !chore.completed %>
+          <li><%= chore.description %> 
+          <%= link_to("Mark as Complete", complete_house_chore_path(@house, chore), method: :post) %>
+          | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
+          <% end %>
+          <% end %>
+      </ul>
+      <ul>
+        <h3>Completed:</h3>
+        <% @house.chores.each do |chore| %>
+          <% if chore.completed %>
+          <li><%= chore.description %> 
+          <%= link_to("Mark as Incomplete", complete_house_chore_path(@house, chore), method: :post) %>
+          | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
+          <% end %>
+        <% end %>
+      </ul>
     <% end %>
-    <h3>Completed:</h3>
-    <% @house.chores.each do |chore| %>
-      <% if chore.completed %>
-      <li><%= chore.description %> 
-      <% link_to("Mark as Incomplete", complete_house_chore_path(@house, chore), method: :post) %>
-      | <%= link_to 'Edit', "/houses/#{@house.id}/chores/#{chore.id}/edit" %> | <%= link_to 'Destroy', "/houses/#{@house.id}/chores/#{chore.id}", method: :delete %></li>
-      <% end %>
-    <% end %>
-  </ul>
-<% end %>
+  </div>
+</div>
 
-<h3>Add a chore:</h3>
-<%= form_with url: "/houses/#{@house.id}/chores" do |form| %>
-  <%= form.text_area 'chore[description]' %><br>
-  <%= form.submit 'Add Chore' %>
-<% end %>
+<div class="row">
+  <div class="col-lg-6 offset-lg-2">
+    <h3>Add a chore:</h3>
+    <%= form_with url: "/houses/#{@house.id}/chores" do |form| %>
+      <%= form.text_area 'chore[description]' %><br>
+      <%= form.submit 'Add Chore' %>
+    <% end %>
+  </div>
+</div>
 
 <br>
-
-<%= link_to 'Edit', "/houses/#{@house.id}/edit" %> |
-<%= link_to 'Destroy', "/houses/#{@house.id}", method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Back', '/houses' %>
+<div class="row">
+  <div class="col-lg-6 offset-lg-2">
+    <%= link_to 'Edit House Info', "/houses/#{@house.id}/edit" %> |
+    <%= link_to 'Delete House', "/houses/#{@house.id}", method: :delete, data: { confirm: 'Are you sure?' } %> |
+    <%= link_to 'Back', current_user %>
+  </div>
+</div>
